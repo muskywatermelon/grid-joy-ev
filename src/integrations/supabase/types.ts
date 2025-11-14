@@ -14,6 +14,36 @@ export type Database = {
   }
   public: {
     Tables: {
+      audit_logs: {
+        Row: {
+          changed_at: string | null
+          id: number
+          new_data: Json | null
+          old_data: Json | null
+          operation: string
+          record_id: string
+          table_name: string
+        }
+        Insert: {
+          changed_at?: string | null
+          id?: number
+          new_data?: Json | null
+          old_data?: Json | null
+          operation: string
+          record_id: string
+          table_name: string
+        }
+        Update: {
+          changed_at?: string | null
+          id?: number
+          new_data?: Json | null
+          old_data?: Json | null
+          operation?: string
+          record_id?: string
+          table_name?: string
+        }
+        Relationships: []
+      }
       charging_points: {
         Row: {
           availability: string
@@ -24,6 +54,7 @@ export type Database = {
           location: string
           max_voltage: number
           num_of_points: number
+          updated_at: string | null
         }
         Insert: {
           availability: string
@@ -34,6 +65,7 @@ export type Database = {
           location: string
           max_voltage: number
           num_of_points: number
+          updated_at?: string | null
         }
         Update: {
           availability?: string
@@ -44,6 +76,7 @@ export type Database = {
           location?: string
           max_voltage?: number
           num_of_points?: number
+          updated_at?: string | null
         }
         Relationships: [
           {
@@ -61,18 +94,21 @@ export type Database = {
           company_name: string
           created_at: string | null
           id: number
+          updated_at: string | null
         }
         Insert: {
           branch: string
           company_name: string
           created_at?: string | null
           id?: number
+          updated_at?: string | null
         }
         Update: {
           branch?: string
           company_name?: string
           created_at?: string | null
           id?: number
+          updated_at?: string | null
         }
         Relationships: []
       }
@@ -83,6 +119,7 @@ export type Database = {
           id: number
           name: string
           phone_no: string
+          updated_at: string | null
         }
         Insert: {
           address: string
@@ -90,6 +127,7 @@ export type Database = {
           id?: number
           name: string
           phone_no: string
+          updated_at?: string | null
         }
         Update: {
           address?: string
@@ -97,6 +135,7 @@ export type Database = {
           id?: number
           name?: string
           phone_no?: string
+          updated_at?: string | null
         }
         Relationships: []
       }
@@ -109,6 +148,7 @@ export type Database = {
           model: string
           num_plate: string
           specs: string
+          updated_at: string | null
           volt_req: number
         }
         Insert: {
@@ -119,6 +159,7 @@ export type Database = {
           model: string
           num_plate: string
           specs: string
+          updated_at?: string | null
           volt_req: number
         }
         Update: {
@@ -129,6 +170,7 @@ export type Database = {
           model?: string
           num_plate?: string
           specs?: string
+          updated_at?: string | null
           volt_req?: number
         }
         Relationships: [
@@ -149,6 +191,7 @@ export type Database = {
           date: string
           receipt_number: string
           time: string
+          updated_at: string | null
         }
         Insert: {
           amount: number
@@ -157,6 +200,7 @@ export type Database = {
           date: string
           receipt_number: string
           time: string
+          updated_at?: string | null
         }
         Update: {
           amount?: number
@@ -165,6 +209,7 @@ export type Database = {
           date?: string
           receipt_number?: string
           time?: string
+          updated_at?: string | null
         }
         Relationships: [
           {
