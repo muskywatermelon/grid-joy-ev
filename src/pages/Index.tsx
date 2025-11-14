@@ -241,13 +241,15 @@ const Index = () => {
     <div className="container">
       <div className="header">
         <h1>⚡ EV Charging Point Manager</h1>
-        <input
-          type="text"
-          className="search-box"
-          placeholder="Search..."
-          value={searchTerm}
-          onChange={(e) => setSearchTerm(e.target.value)}
-        />
+        {activeTab !== "dashboard" && (
+          <input
+            type="text"
+            className="search-box"
+            placeholder="Search..."
+            value={searchTerm}
+            onChange={(e) => setSearchTerm(e.target.value)}
+          />
+        )}
       </div>
 
       <div className="nav-tabs">

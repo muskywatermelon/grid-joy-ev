@@ -12,6 +12,16 @@ export const Dashboard = () => {
   const { receipts } = useReceipts();
 
   const availablePoints = chargingPoints.filter((p) => p.availability === "Available").length;
+  const occupiedPoints = chargingPoints.filter((p) => p.availability === "Occupied").length;
+  const maintenancePoints = chargingPoints.filter((p) => p.availability === "Maintenance").length;
+
+  // Get total revenue from receipts
+  const totalRevenue = receipts.reduce((sum, receipt) => sum + receipt.amount, 0);
+
+  // Sort receipts by date (newest first) for recent receipts display
+  const recentReceipts = [...receipts]
+    .sort((a, b) => new Date(b.date).getTime() - new Date(a.date).getTime())
+    .slice(0, 10);
 
   return (
     <div>
@@ -33,8 +43,8 @@ export const Dashboard = () => {
           <div className="value">{chargingPoints.length}</div>
         </div>
         <div className="stat-card pink">
-          <h3>Total Receipts</h3>
-          <div className="value">{receipts.length}</div>
+          <h3>Total Revenue</h3>
+          <div className="value">₹{totalRevenue.toFixed(2)}</div>
         </div>
         <div className="stat-card teal">
           <h3>Available Points</h3>
@@ -44,27 +54,65 @@ export const Dashboard = () => {
 
       <div className="two-col-grid">
         <div className="content-card">
-          <h3>Recent Receipts</h3>
-          {receipts.slice(0, 5).map((receipt) => (
-            <div key={receipt.receipt_number} className="list-item">
-              <span>{receipt.receipt_number}</span>
-              <strong style={{ color: "#10b981" }}>
-                ₹{receipt.amount.toFixed(2)}
-              </strong>
+          <h3>Recent Receipts (Last 10)</h3>
+          {recentReceipts.length === 0 ? (
+            <p className="no-data">No receipts found</p>
+          ) : (
+            <div className="receipts-list">
+              {recentReceipts.map((receipt) => (
+                <div key={receipt.receipt_number} className="list-item receipt-item">
+                  <div className="receipt-info">
+                    <span className="receipt-number">{receipt.receipt_number}</span>
+                    <span className="receipt-date">
+                      {new Date(receipt.date).toLocaleDateString('en-IN')} • {receipt.time}
+                    </span>
+                  </div>
+                  <strong className="receipt-amount">
+                    ₹{receipt.amount.toFixed(2)}
+                  </strong>
+                </div>
+              ))}
             </div>
-          ))}
+          )}
         </div>
 
         <div className="content-card">
           <h3>Charging Point Status</h3>
-          {chargingPoints.slice(0, 5).map((point) => (
-            <div key={point.id} className="list-item">
-              <span>{point.location}</span>
-              <span className={`badge ${point.availability.toLowerCase()}`}>
-                {point.availability}
-              </span>
+          <div className="status-summary">
+            <div className="status-item">
+              <span className="status-label">Available:</span>
+              <span className="status-value available">{availablePoints}</span>
             </div>
-          ))}
+            <div className="status-item">
+              <span className="status-label">Occupied:</span>
+              <span className="status-value occupied">{occupiedPoints}</span>
+            </div>
+            <div className="status-item">
+              <span className="status-label">Maintenance:</span>
+              <span className="status-value maintenance">{maintenancePoints}</span>
+            </div>
+          </div>
+          
+          <div className="charging-points-details">
+            <h4>Points by Location</h4>
+            {chargingPoints.length === 0 ? (
+              <p className="no-data">No charging points found</p>
+            ) : (
+              chargingPoints.map((point) => (
+                <div key={point.id} className="list-item charging-item">
+                  <div className="charging-info">
+                    <span className="location-name">{point.location}</span>
+                    <span className="charging-details">
+                      {point.num_of_points} points • {point.max_voltage}V • {point.functionality}
+                    </span>
+                  </div>
+                  <span className={`badge ${point.availability.toLowerCase()}`}>
+                    {point.availability}
+                  </span>
+                </div>
+              ))
+            )}
+          </div>
         </div>
       </div>
     </div>

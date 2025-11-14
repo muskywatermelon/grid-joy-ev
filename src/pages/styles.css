@@ -299,6 +299,141 @@ tbody tr:hover {
   margin-top: 20px;
 }
 
+/* Enhanced Dashboard Styles */
+.receipts-list {
+  max-height: 450px;
+  overflow-y: auto;
+}
+
+.receipt-item {
+  padding: 15px;
+  margin-bottom: 10px;
+  background: #f8fafc;
+  border-radius: 8px;
+  border-left: 3px solid #10b981;
+}
+
+.receipt-item:hover {
+  background: #f1f5f9;
+}
+
+.receipt-info {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+}
+
+.receipt-number {
+  font-weight: 600;
+  color: #1e293b;
+  font-size: 14px;
+}
+
+.receipt-date {
+  font-size: 12px;
+  color: #64748b;
+}
+
+.receipt-amount {
+  color: #10b981;
+  font-size: 16px;
+  font-weight: 700;
+}
+
+.status-summary {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 15px;
+  background: #f8fafc;
+  border-radius: 8px;
+  margin-bottom: 20px;
+}
+
+.status-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 0;
+}
+
+.status-label {
+  font-weight: 600;
+  color: #475569;
+  font-size: 14px;
+}
+
+.status-value {
+  font-weight: 700;
+  font-size: 18px;
+  padding: 4px 12px;
+  border-radius: 6px;
+}
+
+.status-value.available {
+  color: #065f46;
+  background: #d1fae5;
+}
+
+.status-value.occupied {
+  color: #991b1b;
+  background: #fee2e2;
+}
+
+.status-value.maintenance {
+  color: #92400e;
+  background: #fef3c7;
+}
+
+.charging-points-details {
+  margin-top: 20px;
+}
+
+.charging-points-details h4 {
+  font-size: 14px;
+  color: #64748b;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+  margin-bottom: 15px;
+}
+
+.charging-item {
+  padding: 12px;
+  background: #f8fafc;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  align-items: center;
+}
+
+.charging-item:hover {
+  background: #f1f5f9;
+}
+
+.charging-info {
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  flex: 1;
+}
+
+.location-name {
+  font-weight: 600;
+  color: #1e293b;
+  font-size: 14px;
+}
+
+.charging-details {
+  font-size: 12px;
+  color: #64748b;
+}
+
+.no-data {
+  text-align: center;
+  color: #94a3b8;
+  padding: 20px;
+  font-style: italic;
+}
+
 @media (max-width: 768px) {
   .header {
     flex-direction: column;
