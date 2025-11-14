@@ -27,12 +27,9 @@ export const useCustomers = () => {
 
   const addCustomer = useMutation({
     mutationFn: async (customer: Omit<Customer, "id" | "created_at">) => {
-      const { data: { user } } = await supabase.auth.getUser();
-      if (!user) throw new Error("Not authenticated");
-      
       const { data, error } = await supabase
         .from("customers")
-        .insert([{ ...customer, user_id: user.id }])
+        .insert([customer])
         .select()
         .single();
       

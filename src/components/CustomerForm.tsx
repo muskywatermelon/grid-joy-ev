@@ -1,12 +1,8 @@
 import { useState, useEffect } from "react";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
 import { Customer } from "@/hooks/useCustomers";
-import { customerSchema, CustomerFormData } from "@/lib/validations";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { Alert, AlertDescription } from "@/components/ui/alert";
 
 interface CustomerFormProps {
   customer?: Customer | null;
@@ -15,77 +11,60 @@ interface CustomerFormProps {
 }
 
 export const CustomerForm = ({ customer, onSubmit, onCancel }: CustomerFormProps) => {
-  const [submitError, setSubmitError] = useState<string>("");
-  
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-    reset,
-  } = useForm<CustomerFormData>({
-    resolver: zodResolver(customerSchema),
-    defaultValues: {
-      name: customer?.name || "",
-      phone_no: customer?.phone_no || "",
-      address: customer?.address || "",
-    },
+  const [formData, setFormData] = useState({
+    name: "",
+    phone_no: "",
+    address: "",
   });
 
   useEffect(() => {
     if (customer) {
-      reset({
+      setFormData({
         name: customer.name,
         phone_no: customer.phone_no,
         address: customer.address,
       });
     }
-  }, [customer, reset]);
+  }, [customer]);
 
-  const onSubmitForm = (data: CustomerFormData) => {
-    try {
-      setSubmitError("");
-      if (customer) {
-        onSubmit({ name: data.name, phone_no: data.phone_no, address: data.address, id: customer.id });
-      } else {
-        onSubmit({ name: data.name, phone_no: data.phone_no, address: data.address });
-      }
-    } catch (error) {
-      setSubmitError(error instanceof Error ? error.message : "Failed to submit form");
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (customer) {
+      onSubmit({ ...formData, id: customer.id });
+    } else {
+      onSubmit(formData);
     }
   };
 
   return (
-    <form onSubmit={handleSubmit(onSubmitForm)} className="space-y-4">
-      {submitError && (
-        <Alert variant="destructive">
-          <AlertDescription>{submitError}</AlertDescription>
-        </Alert>
-      )}
-      
+    <form onSubmit={handleSubmit} className="space-y-4">
       <div>
         <Label htmlFor="name">Name</Label>
-        <Input id="name" {...register("name")} />
-        {errors.name && (
-          <p className="text-sm text-destructive mt-1">{errors.name.message}</p>
-        )}
+        <Input
+          id="name"
+          value={formData.name}
+          onChange={(e) => setFormData({ ...formData, name: e.target.value })}
+          required
+        />
       </div>
-      
       <div>
         <Label htmlFor="phone_no">Phone Number</Label>
-        <Input id="phone_no" {...register("phone_no")} />
-        {errors.phone_no && (
-          <p className="text-sm text-destructive mt-1">{errors.phone_no.message}</p>
-        )}
+        <Input
+          id="phone_no"
+          value={formData.phone_no}
+          onChange={(e) => setFormData({ ...formData, phone_no: e.target.value })}
+          required
+        />
       </div>
-      
       <div>
         <Label htmlFor="address">Address</Label>
-        <Input id="address" {...register("address")} />
-        {errors.address && (
-          <p className="text-sm text-destructive mt-1">{errors.address.message}</p>
-        )}
+        <Input
+          id="address"
+          value={formData.address}
+          onChange={(e) => setFormData({ ...formData, address: e.target.value })}
+          required
+        />
       </div>
-      
       <div className="modal-footer">
         <Button type="button" variant="secondary" onClick={onCancel}>
           Cancel
