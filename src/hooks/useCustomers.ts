@@ -1,6 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
-import { toast } from "sonner";
 
 export interface Customer {
   id: number;
@@ -39,10 +38,9 @@ export const useCustomers = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["customers"] });
-      toast.success("Customer added successfully!");
     },
     onError: (error) => {
-      toast.error(`Failed to add customer: ${error.message}`);
+      console.error("Failed to add customer:", error);
     },
   });
 
@@ -60,10 +58,9 @@ export const useCustomers = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["customers"] });
-      toast.success("Customer updated successfully!");
     },
     onError: (error) => {
-      toast.error(`Failed to update customer: ${error.message}`);
+      console.error("Failed to update customer:", error);
     },
   });
 
@@ -78,10 +75,9 @@ export const useCustomers = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["customers"] });
-      toast.success("Customer deleted successfully!");
     },
     onError: (error) => {
-      toast.error(`Failed to delete customer: ${error.message}`);
+      console.error("Failed to delete customer:", error);
     },
   });
 

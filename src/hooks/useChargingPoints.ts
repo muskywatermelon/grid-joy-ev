@@ -1,6 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
-import { toast } from "sonner";
 
 export interface ChargingPoint {
   id?: number;
@@ -42,10 +41,9 @@ export const useChargingPoints = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["charging_points"] });
-      toast.success("Charging point added successfully!");
     },
     onError: (error) => {
-      toast.error(`Failed to add charging point: ${error.message}`);
+      console.error("Failed to add charging point:", error);
     },
   });
 
@@ -63,10 +61,9 @@ export const useChargingPoints = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["charging_points"] });
-      toast.success("Charging point updated successfully!");
     },
     onError: (error) => {
-      toast.error(`Failed to update charging point: ${error.message}`);
+      console.error("Failed to update charging point:", error);
     },
   });
 
@@ -81,10 +78,9 @@ export const useChargingPoints = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["charging_points"] });
-      toast.success("Charging point deleted successfully!");
     },
     onError: (error) => {
-      toast.error(`Failed to delete charging point: ${error.message}`);
+      console.error("Failed to delete charging point:", error);
     },
   });
 

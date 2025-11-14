@@ -1,6 +1,5 @@
 import { useQuery, useMutation, useQueryClient } from "@tanstack/react-query";
 import { supabase } from "@/integrations/supabase/client";
-import { toast } from "sonner";
 
 export interface Receipt {
   receipt_number: string;
@@ -40,10 +39,9 @@ export const useReceipts = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["receipts"] });
-      toast.success("Receipt added successfully!");
     },
     onError: (error) => {
-      toast.error(`Failed to add receipt: ${error.message}`);
+      console.error("Failed to add receipt:", error);
     },
   });
 
@@ -61,10 +59,9 @@ export const useReceipts = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["receipts"] });
-      toast.success("Receipt updated successfully!");
     },
     onError: (error) => {
-      toast.error(`Failed to update receipt: ${error.message}`);
+      console.error("Failed to update receipt:", error);
     },
   });
 
@@ -79,10 +76,9 @@ export const useReceipts = () => {
     },
     onSuccess: () => {
       queryClient.invalidateQueries({ queryKey: ["receipts"] });
-      toast.success("Receipt deleted successfully!");
     },
     onError: (error) => {
-      toast.error(`Failed to delete receipt: ${error.message}`);
+      console.error("Failed to delete receipt:", error);
     },
   });
 
