@@ -46,10 +46,6 @@ export const Dashboard = () => {
           <h3>Total Revenue</h3>
           <div className="value">₹{totalRevenue.toFixed(2)}</div>
         </div>
-        <div className="stat-card teal">
-          <h3>Available Points</h3>
-          <div className="value">{availablePoints}</div>
-        </div>
       </div>
 
       <div className="two-col-grid">
