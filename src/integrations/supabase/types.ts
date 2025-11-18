@@ -86,6 +86,13 @@ export type Database = {
             referencedRelation: "companies"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "charging_points_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "company_summary"
+            referencedColumns: ["id"]
+          },
         ]
       }
       companies: {
@@ -184,6 +191,13 @@ export type Database = {
             referencedRelation: "companies"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "ev_info_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "company_summary"
+            referencedColumns: ["id"]
+          },
         ]
       }
       profiles: {
@@ -246,6 +260,13 @@ export type Database = {
             referencedRelation: "companies"
             referencedColumns: ["id"]
           },
+          {
+            foreignKeyName: "receipts_company_id_fkey"
+            columns: ["company_id"]
+            isOneToOne: false
+            referencedRelation: "company_summary"
+            referencedColumns: ["id"]
+          },
         ]
       }
       user_roles: {
@@ -271,7 +292,86 @@ export type Database = {
       }
     }
     Views: {
-      [_ in never]: never
+      charging_point_details: {
+        Row: {
+          availability: string | null
+          branch: string | null
+          company_name: string | null
+          created_at: string | null
+          functionality: string | null
+          id: number | null
+          location: string | null
+          max_voltage: number | null
+          num_of_points: number | null
+          updated_at: string | null
+        }
+        Relationships: []
+      }
+      charging_point_utilization: {
+        Row: {
+          available: number | null
+          branch: string | null
+          company_name: string | null
+          maintenance: number | null
+          occupied: number | null
+          total_points: number | null
+          utilization_percentage: number | null
+        }
+        Relationships: []
+      }
+      company_summary: {
+        Row: {
+          available_points: number | null
+          branch: string | null
+          company_name: string | null
+          id: number | null
+          maintenance_points: number | null
+          occupied_points: number | null
+          total_charging_points: number | null
+          total_receipts: number | null
+          total_revenue: number | null
+          total_vehicles: number | null
+        }
+        Relationships: []
+      }
+      daily_revenue_summary: {
+        Row: {
+          average_transaction: number | null
+          date: string | null
+          max_transaction: number | null
+          min_transaction: number | null
+          total_revenue: number | null
+          transaction_count: number | null
+        }
+        Relationships: []
+      }
+      ev_details: {
+        Row: {
+          battery_time: string | null
+          branch: string | null
+          company_name: string | null
+          cost: number | null
+          created_at: string | null
+          model: string | null
+          num_plate: string | null
+          specs: string | null
+          updated_at: string | null
+          volt_req: number | null
+        }
+        Relationships: []
+      }
+      receipt_details: {
+        Row: {
+          amount: number | null
+          branch: string | null
+          company_name: string | null
+          created_at: string | null
+          date: string | null
+          receipt_number: string | null
+          time: string | null
+        }
+        Relationships: []
+      }
     }
     Functions: {
       has_role: {
